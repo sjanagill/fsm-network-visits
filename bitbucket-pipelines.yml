@@ -14,7 +14,7 @@ pipelines:
           - git clone https://bitbucket.org/sonikaj/fsm-network-visits.git
 
     - step:
-        name: Checkout code
+        name: Pre-deploy steps
         script:
           - rm /bin/sh && ln -s /bin/bash /bin/sh && apt-get update && apt-get install -y git
           - python3 -m venv .venv
@@ -37,6 +37,7 @@ pipelines:
     - step:
         name: Run Pytests
         script:
+          - pip install pytest
           - pytest cloud_functions/tests/
           
     - step:
@@ -48,6 +49,10 @@ pipelines:
         name: Deploy with Terraform
         # Requires Terraform CLI pre-installed
         script:
+          - echo $SA_AUTH > /tmp/sa-auth.json
+          - chmod 777 /tmp/sa-auth.json
+          - gcloud auth activate-service-account $SA_NAME --key-file=/tmp/sa-auth.json --project="fsm-network"
+          - gcloud config set project "fsm-network"
           - bash deploy.sh
 
 #variables:
