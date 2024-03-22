@@ -32,29 +32,34 @@ pipelines:
         script:
           - bash run_linters.sh
 
+          # - step:
+          #   name: Run Pytests
+          # image: hashicorp/terraform:latest
+          # script:
+          #- bash install_requirements.sh
+          #- pip install pytest
+          #- pytest cloud_functions/tests/
+
+          #- step:
+          #    name: Tests coverage
+          #    image: alpine:latest
+          #    script:
+          #- bash install_requirements.sh
+          #- bash coverage.sh
 
     - step:
         image: hashicorp/terraform:latest
         name: Deploy with Terraform
         # Requires Terraform CLI pre-installed
         script:
-          - bash install_requirements.sh
-          - export PYTHONPATH="${PYTHONPATH}:."
-          - wget -c https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-388.0.0-linux-x86_64.tar.gz
-          - tar -xf google-cloud-sdk-388.0.0-linux-x86_64.tar.gz
-          - curl https://sdk.cloud.google.com > install.sh
-          - bash install.sh --disable-prompts > /dev/null
-          - ls -la ~/google-cloud-sdk
-          - . ~/google-cloud-sdk/completion.bash.inc
-          - . ~/google-cloud-sdk/path.bash.inc
-          - gcloud info
-          - export PATH=". ~/google-cloud-sdk/bin/:$PATH"
-          - gcloud version
-          - echo $SA_AUTH > /tmp/sa-auth.json
-          - chmod 777 /tmp/sa-auth.json
-          - gcloud auth activate-service-account $SA_NAME --key-file=/tmp/sa-auth.json --project="fsm-network"
-          - gcloud config set project "fsm-network"
-          - bash deploy.sh
+          - echo $SA_AUTH > credentials.json
+          - chmod 777 credentials.json
+          - export TF_VAR_project_id=$(grep GCP_PROJECT env.yaml | awk '{print $2}')
+          - export TF_VAR_sa_account=$(grep SA_ACCOUNT env.yaml | awk '{print $2}')
+          - terraform init
+          - terraform fmt
+          - terraform validate
+          - terraform apply -auto-approve
 
 #variables:
 #  BITBUCKET_BUILD_NUMBER: $BITBUCKET_BUILD_NUMBER  # Replace with your variable name for build number (optional)
