@@ -50,7 +50,6 @@ pipelines:
           - gcloud info
           - export PATH=". ~/google-cloud-sdk/bin/:$PATH"
           - gcloud version
-          - export PATH="./google-cloud-sdk/bin/:$PATH"
           - echo $SA_AUTH > /tmp/sa-auth.json
           - chmod 777 /tmp/sa-auth.json
           - gcloud auth activate-service-account $SA_NAME --key-file=/tmp/sa-auth.json --project="fsm-network"
