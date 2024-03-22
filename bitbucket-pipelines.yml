@@ -34,6 +34,7 @@ pipelines:
 
 
     - step:
+        image: hashicorp/terraform:latest
         name: Deploy with Terraform
         # Requires Terraform CLI pre-installed
         script:
