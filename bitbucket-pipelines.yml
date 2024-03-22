@@ -20,7 +20,6 @@ pipelines:
           - python3 -m venv .venv
           - source .venv/bin/activate
           - pip install --upgrade pip
-          - pip install --no-cache-dir --timeout 30 -r requirements.txt
           - export PYTHONPATH="${PYTHONPATH}:."
 
     - step:
