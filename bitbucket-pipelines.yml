@@ -7,10 +7,6 @@ image: python:3.8
 
 pipelines:
   default:
-    - step:
-        name: Checkout code
-        script:
-          - git clone https://sjanagill@bitbucket.org/sonikaj/fsm-network-visits.git
 
     - step:
         name: Install dependencies
@@ -18,7 +14,7 @@ pipelines:
           - ./install_requirements.sh
 
     - step:
-        name: Run static code checks (optional)
+        name: Run static code checks
         script:
           - ./run_linters.sh
           
@@ -33,7 +29,7 @@ pipelines:
           - ./coverage.sh
 
     - step:
-        name: Deploy with Terraform (Optional)
+        name: Deploy with Terraform
         # Requires Terraform CLI pre-installed
         script:
           - ./deploy.sh
