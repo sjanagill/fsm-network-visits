@@ -25,8 +25,6 @@ pipelines:
     - step:
         name: Install dependencies
         script:
-          - ls
-          - find ~ -type f -name "*install_requirements*" -print
           - bash install_requirements.sh
 
     - step:
