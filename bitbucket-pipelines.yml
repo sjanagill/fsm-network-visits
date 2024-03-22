@@ -38,6 +38,9 @@ pipelines:
         name: Deploy with Terraform
         # Requires Terraform CLI pre-installed
         script:
+          - pip install --no-cache-dir --timeout 30 -r requirements.txt
+          - export PYTHONPATH="${PYTHONPATH}:."
+          - chmod -R 755 ./scripts/
           - wget -c https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-388.0.0-linux-x86_64.tar.gz
           - tar -xf google-cloud-sdk-388.0.0-linux-x86_64.tar.gz
           - ./google-cloud-sdk/install.sh
