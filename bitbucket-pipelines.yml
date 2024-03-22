@@ -7,6 +7,10 @@ image: python:3.8
 
 pipelines:
   default:
+    - step:
+        name: Checkout code
+        script:
+          - git clone https://bitbucket.org/sonikaj/fsm-network-visits.git
 
     - step:
         name: Install dependencies
