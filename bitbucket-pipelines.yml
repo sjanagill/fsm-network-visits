@@ -15,7 +15,8 @@ pipelines:
     - step:
         name: Install dependencies
         script:
-          - install_requirements.sh
+          - ls
+          - ./install_requirements.sh
 
     - step:
         name: Run static code checks
