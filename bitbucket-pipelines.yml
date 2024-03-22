@@ -11,17 +11,17 @@ pipelines:
     - step:
         name: Checkout code
         script:
+          - git clone https://bitbucket.org/sonikaj/fsm-network-visits.git
+
+    - step:
+        name: Checkout code
+        script:
           - rm /bin/sh && ln -s /bin/bash /bin/sh && apt-get update && apt-get install -y git
           - python3 -m venv .venv
           - source .venv/bin/activate
           - pip install --upgrade pip
           - pip install --no-cache-dir --timeout 30 -r requirements.txt
           - export PYTHONPATH="${PYTHONPATH}:."
-
-    - step:
-        name: Checkout code
-        script:
-          - git clone https://bitbucket.org/sonikaj/fsm-network-visits.git
 
     - step:
         name: Install dependencies
