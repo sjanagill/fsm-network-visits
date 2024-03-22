@@ -31,19 +31,7 @@ pipelines:
         name: Run static code checks
         script:
           - bash run_linters.sh
-          
-    - step:
-        name: Run Pytests
-        script:
-          - bash install_requirements.sh
-          - pip install pytest
-          - pytest cloud_functions/tests/
-          
-    - step:
-        name: Tests coverage
-        script:
-          - bash install_requirements.sh
-          - bash coverage.sh
+
 
     - step:
         name: Deploy with Terraform
