@@ -11,12 +11,12 @@ pipelines:
     - step:
         name: Install dependencies
         script:
-          - ./install_requirements.sh
+          - install_requirements.sh
 
     - step:
         name: Run static code checks
         script:
-          - ./run_linters.sh
+          - run_linters.sh
           
     - step:
         name: Run Pytests
@@ -26,13 +26,13 @@ pipelines:
     - step:
         name: Tests coverage
         script:
-          - ./coverage.sh
+          - coverage.sh
 
     - step:
         name: Deploy with Terraform
         # Requires Terraform CLI pre-installed
         script:
-          - ./deploy.sh
+          - deploy.sh
 
 #variables:
 #  BITBUCKET_BUILD_NUMBER: $BITBUCKET_BUILD_NUMBER  # Replace with your variable name for build number (optional)
