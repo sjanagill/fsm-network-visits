@@ -1,0 +1,42 @@
+#  Template python-build
+
+#  This template allows you to validate your python code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: python:3.8
+
+pipelines:
+  default:
+    - step:
+        name: Checkout code
+        script:
+          - git clone https://sjanagill@bitbucket.org/sonikaj/fsm-network-visits.git
+
+    - step:
+        name: Install dependencies
+        script:
+          - ./install_requirements.sh
+
+    - step:
+        name: Run static code checks (optional)
+        script:
+          - ./run_linters.sh
+          
+    - step:
+        name: Run Pytests
+        script:
+          - pytest cloud_functions/tests/
+          
+    - step:
+        name: Tests coverage
+        script:
+          - ./coverage.sh
+
+    - step:
+        name: Deploy with Terraform (Optional)
+        # Requires Terraform CLI pre-installed
+        script:
+          - ./deploy.sh
+
+#variables:
+#  BITBUCKET_BUILD_NUMBER: $BITBUCKET_BUILD_NUMBER  # Replace with your variable name for build number (optional)
