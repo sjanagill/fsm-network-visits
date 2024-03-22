@@ -40,10 +40,16 @@ pipelines:
         script:
           - pip install --no-cache-dir --timeout 30 -r requirements.txt
           - export PYTHONPATH="${PYTHONPATH}:."
-          - chmod -R 755 ./scripts/
           - wget -c https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-388.0.0-linux-x86_64.tar.gz
           - tar -xf google-cloud-sdk-388.0.0-linux-x86_64.tar.gz
-          - ./google-cloud-sdk/install.sh
+          - curl https://sdk.cloud.google.com > install.sh
+          - bash install.sh --disable-prompts > /dev/null
+          - ls -la ~/google-cloud-sdk
+          - . ~/google-cloud-sdk/completion.bash.inc
+          - . ~/google-cloud-sdk/path.bash.inc
+          - gcloud info
+          - export PATH=". ~/google-cloud-sdk/bin/:$PATH"
+          - gcloud version
           - export PATH="./google-cloud-sdk/bin/:$PATH"
           - echo $SA_AUTH > /tmp/sa-auth.json
           - chmod 777 /tmp/sa-auth.json
